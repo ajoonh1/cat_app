@@ -123,7 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Swaping() {
     Random random = new Random();
-    var numberHats = random.nextInt(hat_items.length);
+    var numberHats = random.nextInt(ListProvider().items.length);
+    var numhuat = random.nextInt(hat_items.length);
     var numberAccs = random.nextInt(acc_items.length);
     setState(() {
       hat = hat_items[numberHats];

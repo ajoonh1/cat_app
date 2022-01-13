@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:cat_app/provider/counts.dart';
 
 class Pomodoro extends StatefulWidget {
   @override
@@ -20,6 +21,8 @@ class _PomodoroState extends State<Pomodoro> {
         print("startstop Inside=$startStop");
         elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
       });
+      context.read<Counts>().add(0.1);
+      context.read<Times>().timeAdd(100);
     }
   }
 
@@ -34,6 +37,14 @@ class _PomodoroState extends State<Pomodoro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: Column(
@@ -47,7 +58,7 @@ class _PomodoroState extends State<Pomodoro> {
               children: <Widget>[
                 IconButton(
                   onPressed: () => startOrStop(),
-                  icon: Image.asset('asset/button.png'),
+                  icon: Image.asset('assets/button.png'),
                   iconSize: 50,
                 )
               ],

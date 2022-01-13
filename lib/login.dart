@@ -339,7 +339,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   onPressed: () {
                     _tryValidation();
                   },
-                  icon: Image.asset('asset/button.png'),
+                  icon: Image.asset('assets/button.png'),
                   iconSize: 50,
                 ),
                 Container(

@@ -25,11 +25,14 @@ class _shopState extends State<shop> {
   Widget buildShoppingCard(shopping Shopping) {
     return Column(children: [
       Card(
-        elevation: 2.0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: Colors.black,
+              width: 5.0,
+            )),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
               Image(image: AssetImage(Shopping.imageUrl)),
@@ -44,12 +47,31 @@ class _shopState extends State<shop> {
                       context.read<Counts>().remove(3600);
                       Shopping.inStock = false;
                       ownedItems.addItem(Shopping.num);
+                      context.read<Closet>().AddItem(Shopping.num);
+                      context.read<Item>().UpdateValue(ownedItems.Length());
                     }
                   : () {
                       Shopping.inStock = true;
                     },
-          child:
-              ownedItems.contains(Shopping.num) ? Text('Owned') : Text('Buy'))
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            side: MaterialStateProperty.all(
+                BorderSide(color: Colors.black87, width: 4)),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            )),
+          ),
+          child: ownedItems.contains(Shopping.num)
+              ? Text('Owned',
+                  style: TextStyle(
+                    fontFamily: 'Kitto',
+                    color: Colors.black87,
+                  ))
+              : Text('Buy',
+                  style: TextStyle(
+                    fontFamily: 'Kitto',
+                    color: Colors.black87,
+                  )))
     ]);
   }
 
@@ -61,6 +83,8 @@ class _shopState extends State<shop> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),

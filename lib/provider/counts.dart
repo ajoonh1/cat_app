@@ -40,10 +40,8 @@ class Check with ChangeNotifier {
   }
 }
 
-class ListProvider with ChangeNotifier {
-  List<int> items = [
-    0,
-  ];
+class ListProvider extends ChangeNotifier {
+  List<int> items = [0];
 
   void addItem(int item) {
     items.add(item);
@@ -54,6 +52,14 @@ class ListProvider with ChangeNotifier {
     bool answer = items.contains(item);
     return answer;
   }
+
+  int Length() {
+    return items.length;
+  }
+
+  List<int> GetItems() {
+    return items;
+  }
 }
 
 class DynamicList {
@@ -61,4 +67,26 @@ class DynamicList {
   DynamicList(this._item);
 
   List get item => _item;
+}
+
+class Item extends ChangeNotifier {
+  int itemNum = 0;
+
+  UpdateValue(int length) {
+    this.itemNum = length;
+    notifyListeners();
+  }
+}
+
+class Closet extends ChangeNotifier {
+  List<int> ownedItems = [0];
+
+  AddItem(int index) {
+    ownedItems.add(index);
+    notifyListeners();
+  }
+
+  int Length() {
+    return ownedItems.length;
+  }
 }

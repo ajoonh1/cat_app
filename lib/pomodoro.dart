@@ -9,11 +9,18 @@ class Pomodoro extends StatefulWidget {
 }
 
 class _PomodoroState extends State<Pomodoro> {
+  double coinCount = 0;
   Stopwatch watch = Stopwatch();
   late Timer timer;
   bool startStop = true;
 
   String elapsedTime = '';
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
 
   updateTime(Timer timer) {
     if (watch.isRunning) {
@@ -21,7 +28,12 @@ class _PomodoroState extends State<Pomodoro> {
         print("startstop Inside=$startStop");
         elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
       });
-      context.read<Counts>().add(0.1);
+      if (coinCount == 360000) {
+        context.read<Counts>().add(1);
+        coinCount = 0;
+      } else {
+        coinCount = coinCount + 10;
+      }
       context.read<Times>().timeAdd(100);
     }
   }
@@ -37,6 +49,7 @@ class _PomodoroState extends State<Pomodoro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -57,6 +70,8 @@ class _PomodoroState extends State<Pomodoro> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onPressed: () => startOrStop(),
                   icon: Image.asset('assets/button.png'),
                   iconSize: 50,

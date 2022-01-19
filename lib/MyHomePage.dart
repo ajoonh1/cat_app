@@ -15,6 +15,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<int> ownedItems = [];
+  var closet;
+  late DynamicList listClass;
+
+  @override
+  void initState() {
+    super.initState();
+    closet = Provider.of<ListProvider>(context, listen: false);
+    listClass = DynamicList(closet.items);
+  }
+
   var hat = 'assets/null.png';
   var acc = 'assets/null.png';
   var glasses = 'assets/null.png';
@@ -28,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChangeNotifierProvider(
-        create: (BuildContext context) => Counts(),
+        create: (BuildContext context) => ListProvider(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -36,6 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   alignment: Alignment.topRight,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -45,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   iconSize: 20,
                 ),
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => coin()));
@@ -92,6 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => shop()));
@@ -100,11 +117,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   iconSize: 20,
                 ),
                 IconButton(
-                  onPressed: Swaping,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onPressed: Swapping,
                   icon: Image.asset('assets/refresh.png'),
                   iconSize: 20,
                 ),
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (BuildContext context) => Pomodoro()));
@@ -121,14 +142,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Swaping() {
+  Swapping() {
     Random random = new Random();
-    var numberHats = random.nextInt(ListProvider().items.length);
-    var numhuat = random.nextInt(hat_items.length);
-    var numberAccs = random.nextInt(acc_items.length);
+    var itemStocks = random.nextInt(closet.Length());
+    ownedItems = closet.GetItems();
+    var itemIndex = ownedItems[itemStocks];
     setState(() {
-      hat = hat_items[numberHats];
-      acc = acc_items[numberAccs];
+      hat = all_items[itemIndex];
     });
   }
 }

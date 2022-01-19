@@ -16,6 +16,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => Check()),
         ChangeNotifierProvider<ListProvider>(
             create: (context) => ListProvider()),
+        ChangeNotifierProvider(create: (_) => Item()),
+        ChangeNotifierProvider(create: (_) => Closet()),
       ],
       child: MyApp(),
     ),

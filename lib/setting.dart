@@ -18,12 +18,12 @@ class _settingState extends State<setting> {
     int seconds = (hundreds / 100).truncate();
     int minutes = (seconds / 60).truncate();
     int hours = (minutes / 60).truncate();
+    int days = (hours / 24).truncate();
 
-    String hoursStr = (hours % 60).toString().padLeft(2, '0');
-    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
-    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+    String hoursStr = (hours % 24).toString();
+    String daysStr = days.toString();
 
-    return "$hoursStr:$minutesStr:$secondsStr";
+    return "$daysStr Day(s) $hoursStr Hour(s)";
   }
 
   convert(int value) {
@@ -76,12 +76,12 @@ class _settingState extends State<setting> {
                     ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'TOTAL FOCUS TIME',
+                  'Your Focus Time',
                   style: TextStyle(fontFamily: 'Kitto', fontSize: 15),
                 ),
+                SizedBox(height: 3.0),
                 Text(
                   transformMilliSeconds(context.watch<Times>().totalTime),
                   style: TextStyle(fontFamily: 'Kitto', fontSize: 15),
